@@ -13,7 +13,7 @@ To use it, you need to specify some parameters:
 ```javascript
 const duckdns = require('updateduckdns')(domain,token,minutes,noParamReq,onResponse);
 ```
-* **domain** (Required): The domain name of your DuckDNS: http://<domain>.duckdns.org
+* **domain** (Required): The domain name of your DuckDNS: http://domain.duckdns.org
 * **token** (Required): Your token (you can find it in your duckdns page)
 * **minutes** (Optional, default: 5): Every how many minutes you need to ping the server
 * **noParamReq** (Optional, default: false): A boolean.\
