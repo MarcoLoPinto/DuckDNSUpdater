@@ -1,14 +1,14 @@
 {
   "name": "duckdnsupdater",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple lightweight https update function for DuckDNS",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/MarcoLoPinto/updateDuckDNS.git"
+    "type": "git",
+    "url": "https://github.com/MarcoLoPinto/updateDuckDNS.git"
   },
   "keywords": [
     "DuckDNS",
