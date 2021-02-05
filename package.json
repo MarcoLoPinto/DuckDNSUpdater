@@ -1,5 +1,5 @@
 {
-  "name": "updateduckdns",
+  "name": "duckdnsupdater",
   "version": "1.0.0",
   "description": "A simple lightweight https update function for DuckDNS",
   "main": "index.js",
