@@ -11,7 +11,7 @@ Or simply clone this repository in your project.
 ## Usage
 To use it, you need to specify some parameters:
 ```javascript
-const duckdns = require('updateduckdns')(domain,token,minutes,noParamReq,onResponse);
+const duckdns = require('duckdnsupdater')(domain,token,minutes,noParamReq,onResponse);
 ```
 * **domain** (Required): The domain name of your DuckDNS: http://domain.duckdns.org
 * **token** (Required): Your token (you can find it in your duckdns page)
@@ -37,7 +37,7 @@ const duckdns = require('updateduckdns')(domain,token,minutes,noParamReq,onRespo
   ```
   If you want to specify your function, you need to do:
   ```javascript
-  const duckdns = require('updateduckdns')(mydomain,mytoken,minutes,noParamReq,(data)=>{
+  const duckdns = require('duckdnsupdater')(mydomain,mytoken,minutes,noParamReq,(data)=>{
     // work here with the data returned
   });
   ```
