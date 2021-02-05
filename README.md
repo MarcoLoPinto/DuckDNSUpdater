@@ -4,7 +4,7 @@ A simple lightweight https update function for DuckDNS
 ## Installation 
 Use [npm](https://www.npmjs.com/) to install it:
 ```bash
-npm install updateduckdns
+npm install duckdnsupdater
 ```
 Or simply clone this repository in your project.
 
