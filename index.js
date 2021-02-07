@@ -7,11 +7,11 @@ module.exports = function(domain,token,minutes = 5, noParamReq = false, onRespon
     const MINUTES = minutes;
 
     let responseCallback = (data) => {
-        data = data.split("\n");
-        if(data[0]=="OK"){
+        let dataArr = data.split("\n");
+        if(dataArr[0]=="OK"){
             let infos = "";
-            if(data.length > 1 && data[1] && data[3]){ 
-                infos = ", ip: "+data[1]+", "+data[3];
+            if(dataArr.length > 1 && dataArr[1] && dataArr[3]){ 
+                infos = ", ip: "+dataArr[1]+", "+dataArr[3];
             }
             console.log("|DUCKDNS|info| Pinged "+YOURDOMAIN+infos);
         }
