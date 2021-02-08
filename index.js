@@ -15,7 +15,7 @@ module.exports = function(domain,token,minutes = 5, noParamReq = false, onRespon
             }
             console.log("|DUCKDNS|info| Pinged "+YOURDOMAIN+infos);
         }
-        else console.log("|DUCKDNS|WARN| Error, response: \n",data);
+        else console.log("|DUCKDNS|WARN| Error, response: \n"+data);
     }
     if(typeof onResponse !== 'function') onResponse = responseCallback;
 
