@@ -1,52 +1,73 @@
 module.exports = function(domain,token,minutes = 5, noParamReq = false, onResponse = undefined) {
-
     const https = require('https');
+    class DuckDNSUpdater{
+        constructor(domain,token,minutes,noParamReq,onResponse){
+            this.YOURDOMAIN = domain || "domain";
+            this.YOURTOKEN = token || "token";
+            this.MINUTES = minutes;
 
-    const YOURDOMAIN = domain || "domain";
-    const YOURTOKEN = token || "token";
-    const MINUTES = minutes;
+            this.URL = `https://duckdns.org/update?domains=${this.YOURDOMAIN}&token=${this.YOURTOKEN}&verbose=true`;
+            if(noParamReq) this.URL = `https://duckdns.org/update/${this.YOURDOMAIN}/${this.YOURTOKEN}`;
 
-    let responseCallback = (data) => {
-        let dataArr = data.split("\n");
-        if(dataArr[0]=="OK"){
-            let infos = "";
-            if(dataArr.length > 1 && dataArr[1] && dataArr[3]){ 
-                infos = ", ip: "+dataArr[1]+", "+dataArr[3];
-            }
-            console.log("|DUCKDNS|info| Pinged "+YOURDOMAIN+infos);
+            if(typeof onResponse !== 'function') this.onResponse = this.responseCallback.bind(this);
+            else this.onResponse = onResponse.bind(this);
+
+            this.listener = undefined;
         }
-        else console.log("|DUCKDNS|WARN| Error, response: \n"+data);
-    }
-    if(typeof onResponse !== 'function') onResponse = responseCallback;
 
-    let URL = `https://duckdns.org/update?domains=${YOURDOMAIN}&token=${YOURTOKEN}&verbose=true`;
-    if(noParamReq) URL = `https://duckdns.org/update/${YOURDOMAIN}/${YOURTOKEN}`;
-
-    let https_redirect = function(link,callback){
-        https.get(link, (resp)=>{
-            let data = '';
-
-            if(resp.statusCode == 301){
-                https_redirect(resp.headers.location,callback);
-                return;
+        start(){
+            if(this.listener == undefined){
+                this.updateServer(this.URL);
+                this.listener = setInterval(() => this.updateServer(this.URL), this.MINUTES*1000*60);
             }
-            // A chunk of data has been received.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
+        }
 
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                callback(data);
-            });
+        stop(){
+            clearTimeout(this.listener);
+            this.listener = undefined;
+        }
 
-        }).on("error", (err) => {
-            callback("Error: " + err.message);
-        });
+        updateServer(URL){
+            this.https_redirect(URL,this.onResponse);
+        }
+
+        responseCallback(data){
+            let dataArr = data.split("\n");
+            if(dataArr[0]=="OK"){
+                let infos = "";
+                if(dataArr.length > 1 && dataArr[1] && dataArr[3]){ 
+                    infos = ", ip: "+dataArr[1]+", "+dataArr[3];
+                }
+                console.log("|DUCKDNS|info| Pinged "+this.YOURDOMAIN+infos);
+            }
+            else console.log("|DUCKDNS|WARN| Error, response: \n"+data);
+        }
+
+        https_redirect(link,callback){
+            https.get(link, (resp)=>{
+                let data = '';
+    
+                if(resp.statusCode == 301){
+                    this.https_redirect(resp.headers.location,callback);
+                    return;
+                }
+                // A chunk of data has been received.
+                resp.on('data', (chunk) => {
+                    data += chunk;
+                });
+    
+                // The whole response has been received. Print out the result.
+                resp.on('end', () => {
+                    callback(data);
+                });
+    
+            }).on("error", (err) => {
+                callback("Error: " + err.message);
+            });
+        }
+
     }
-    let updateServer = (url) => https_redirect(url,onResponse);
-
-    updateServer(URL);
-    setInterval(() => updateServer(URL), MINUTES*1000*60);
+    
+    return new DuckDNSUpdater(domain,token,minutes,noParamReq,onResponse);
 
 }
