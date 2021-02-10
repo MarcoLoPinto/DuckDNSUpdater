@@ -41,6 +41,21 @@ const duckdns = require('duckdnsupdater')(domain,token,minutes,noParamReq,onResp
     // work here with the data returned
   });
   ```
+
+## What's new
+### Version 1.1.x
+With the new update, the require module **returns an instance of the DuckDNSUpdater class**.\
+After requiring it, to start the request you need to do:
+```javascript
+duckdns.start();
+```
+To stop it, simply do:
+```javascript
+duckdns.stop();
+```
+### Version 1.0.x
+After requiring the module, the function will start automatically.
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
