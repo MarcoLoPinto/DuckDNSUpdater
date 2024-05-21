@@ -6,8 +6,8 @@ module.exports = function(domain,token,minutes = 5, noParamReq = false, onRespon
             this.YOURTOKEN = token || "token";
             this.MINUTES = minutes;
 
-            this.URL = `https://duckdns.org/update?domains=${this.YOURDOMAIN}&token=${this.YOURTOKEN}&verbose=true`;
-            if(noParamReq) this.URL = `https://duckdns.org/update/${this.YOURDOMAIN}/${this.YOURTOKEN}`;
+            this.URL = `https://www.duckdns.org/update?domains=${this.YOURDOMAIN}&token=${this.YOURTOKEN}&verbose=true`;
+            if(noParamReq) this.URL = `https://www.duckdns.org/update/${this.YOURDOMAIN}/${this.YOURTOKEN}`;
 
             if(typeof onResponse !== 'function') this.onResponse = this.responseCallback.bind(this);
             else this.onResponse = onResponse.bind(this);
